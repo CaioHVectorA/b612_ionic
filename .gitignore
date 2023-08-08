@@ -27,3 +27,10 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+/android
+/dist
+/cypress
+/resources
+
+

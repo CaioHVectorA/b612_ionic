@@ -1,0 +1,59 @@
+import { IonIcon } from "@ionic/react";
+import { notifications } from "ionicons/icons";
+import { Title } from "../styled/titles";
+import logo from '../../../public/logo.png'
+import { ColumnContainer } from "../styled/container";
+import { SimpleContainer } from "../../utils/types";
+import { BaseSyntheticEvent, SyntheticEvent, Touch, useContext, useEffect, useState } from "react";
+import { AppContext } from "../AppContext";
+import getRange from "../../utils/func/getRange";
+import DrawerSlider from "../DrawerSlider";
+export function FirstSession() {
+    const { scrollValue, setScrollValue } = useContext(AppContext)
+    const range = getRange(scrollValue)
+    return (
+        <div className={`justify-between w-screen px-5 pt-5 items-center ${range < 0.15 ? 'hidden' : 'flex'}`}>
+        <Title>Olá <b>vagabundo</b></Title>
+        <IonIcon ios={notifications} md={notifications} style={{ fontSize: '20px' }} />
+      </div>
+    )
+}
+// fazer com que quando atingir o breakpoint desejado, a imgzinha vá pro lado e o sino link pra pagina vá pra direita. 
+// também, conforme o drawerzinho for subindo, o calendário ir perdendo opacidade. 
+// explicando acima, serão duas páginas que irão coexistir, porém uma acima da outra, e quando o drawer subir, a página de baixo aparecerá.
+
+
+
+
+export function SecondSession() {
+    const { scrollValue, setScrollValue } = useContext(AppContext)
+    const breakpoint = getRange(scrollValue) < 0.15
+    return (
+        <>
+        { !breakpoint ?
+            <div className=' flex w-screen bg-dark px-3 py-3 justify-center rounded-b-3xl'>
+                <img style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
+            </div>
+        : 
+        <div className="bg-dark py-3 rounded-b-3xl">
+                <div className=" flex w-screen px-3 justify-between rounded-b-3xl items-center">
+                    <img style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
+                    <IonIcon ios={notifications} md={notifications} style={{ fontSize: '32px' }} />
+                </div>
+                <DrawerSlider />
+            </div>
+        }
+        </>
+    )
+}
+
+export function SessionsContainer() {
+    const { scrollValue, setScrollValue } = useContext(AppContext)
+    const range = ((window.innerHeight + scrollValue) / window.innerHeight) - 0.08
+    return (
+        <ColumnContainer style={{gap: `${(window.innerHeight + scrollValue) * 1 / 8}px`}} className={ `${range > 0.15 ? 'bg-main' : ''} rounded-b-3xl text-white`}>
+            <FirstSession />
+            <SecondSession />
+        </ColumnContainer>
+    )
+}

@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+    font-family: 'Inria Sans';
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #E8E8E7;
+    --light: #61C8D8;
+    --main: #546DF5;
+    --dark: #743DDB;
+    --secondary: #C159FA;
+}

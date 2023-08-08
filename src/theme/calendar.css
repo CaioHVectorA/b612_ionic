@@ -1,0 +1,37 @@
+
+
+.react-calendar {
+    border: none;
+}
+
+.react-calendar__month-view__weekdays, .react-calendar__navigation {
+    display: none !important;
+}
+
+button abbr {
+    font-family: 'Kufam';
+    font-size: 20px;
+}
+.react-calendar__tile {
+    border: 1px solid var(--dark) !important;
+}
+
+.calendar__borderTop {
+    border-top: 1px solid transparent !important;
+}
+
+.calendar__borderBot {
+    border-bottom: 1px solid transparent !important;
+}
+
+.calendar__borderLeft {
+    border-left: 1px solid transparent !important;
+}
+.calendar__borderRight {
+    border-right: 1px solid transparent !important;
+}
+
+/* fim de semana */
+.react-calendar__month-view__days__day--weekend {
+    /* color: rgba(253, 255, 132, 0.7); */
+}
