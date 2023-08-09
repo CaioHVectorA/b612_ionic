@@ -9,7 +9,7 @@ export function CalendarContainer({children}: SimpleContainer) {
     const { scrollValue, setScrollValue } = useContext(AppContext)   
     const range = getRange(scrollValue)
     return (
-        <div className=" w-screen flex justify-center mt-3" style={{ opacity: range, display: range < 0.15 ? 'none' : 'flex' }}>
+        <div className=" w-screen flex justify-center mt-3" style={{ opacity: range, display: range < 0.15 ? 'none' : 'flex'}}>
             {children}
         </div>
     )
@@ -21,7 +21,10 @@ export function ModifiedCalendar() {
         calendarBorder(elements)
         
     }
-    useEffect(HandleBorderSystem, [])
+    useEffect(() => {
+       const interval = setInterval(() => HandleBorderSystem(), 300)
+       return () => clearInterval(interval) 
+    }, [])
     return (
         <Calendar onClickDay={HandleBorderSystem} />
     )

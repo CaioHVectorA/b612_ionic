@@ -19,7 +19,6 @@ export default function DrawerSlider() {
     function handleLeave(e: any) {
         setTransition('0.3s')
         if (scrollValue * -1 > window.innerHeight / 2 || scrollValue - 300 < prevValue) {
-            console.log('kjdsljkldjask')
             setScrollValue(window.innerHeight * -1 + (breakpoint + 1))
         } else {
             setScrollValue(0)
@@ -43,6 +42,8 @@ export default function DrawerSlider() {
         }
     }, [divisionPoint])
     return (
-        <div className={divisionPoint ?  'rounded-full opacity-40 h-4 w-2/3 fixed bottom-4 bg-black right-1/2' : 'rounded-full opacity-40 h-4 w-2/3 mx-auto bg-white'} onTouchMove={handleTouch} onTouchEnd={handleLeave} style={{transform: divisionPoint ? `translate(50%,${scrollValue}px)` : 'translate(0px,0px)', transition: transitionValue}}/>
+        <div className={divisionPoint ? 'fixed bottom-4 w-screen flex justify-center items-center py-4' : 'py-4 w-screen flex justify-center items-center'}  onTouchMove={handleTouch} onTouchEnd={handleLeave} style={{transform: divisionPoint ? `translate(0%,${scrollValue}px)` : 'translate(0px,0px)', transition: transitionValue}}>
+            <div className={divisionPoint ?  'rounded-full opacity-40 h-4 w-1/3 bg-black' : 'rounded-full opacity-40 h-4 w-1/3 mx-auto bg-white'} />
+        </div>
     )
 } 

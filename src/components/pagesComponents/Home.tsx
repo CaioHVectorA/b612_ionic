@@ -8,13 +8,16 @@ import { BaseSyntheticEvent, SyntheticEvent, Touch, useContext, useEffect, useSt
 import { AppContext } from "../AppContext";
 import getRange from "../../utils/func/getRange";
 import DrawerSlider from "../DrawerSlider";
+import { Link } from "react-router-dom";
 export function FirstSession() {
     const { scrollValue, setScrollValue } = useContext(AppContext)
     const range = getRange(scrollValue)
     return (
         <div className={`justify-between w-screen px-5 pt-5 items-center ${range < 0.15 ? 'hidden' : 'flex'}`}>
         <Title>Olá <b>vagabundo</b></Title>
-        <IonIcon ios={notifications} md={notifications} style={{ fontSize: '20px' }} />
+        <Link to={'/avisos'}>
+            <IonIcon ios={notifications} md={notifications} style={{ fontSize: '20px' }} />
+        </Link>
       </div>
     )
 }
@@ -31,14 +34,16 @@ export function SecondSession() {
     return (
         <>
         { !breakpoint ?
-            <div className=' flex w-screen bg-dark px-3 py-3 justify-center rounded-b-3xl'>
+            <div className=' flex w-screen bg-dark px-3 py-1 justify-center rounded-3xl'>
                 <img style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
             </div>
         : 
         <div className="bg-dark py-3 rounded-b-3xl">
                 <div className=" flex w-screen px-3 justify-between rounded-b-3xl items-center">
                     <img style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
-                    <IonIcon ios={notifications} md={notifications} style={{ fontSize: '32px' }} />
+                    <Link to={'/avisos'}>
+                        <IonIcon ios={notifications} md={notifications} style={{ fontSize: '32px' }} />
+                    </Link>
                 </div>
                 <DrawerSlider />
             </div>
@@ -51,7 +56,7 @@ export function SessionsContainer() {
     const { scrollValue, setScrollValue } = useContext(AppContext)
     const range = ((window.innerHeight + scrollValue) / window.innerHeight) - 0.08
     return (
-        <ColumnContainer style={{gap: `${(window.innerHeight + scrollValue) * 1 / 8}px`}} className={ `${range > 0.15 ? 'bg-main' : ''} rounded-b-3xl text-white`}>
+        <ColumnContainer style={{gap: `${(window.innerHeight + scrollValue) * 1 / 9.5}px`}} className={ `${range > 0.15 ? 'bg-main' : ''} rounded-b-3xl text-white`}>
             <FirstSession />
             <SecondSession />
         </ColumnContainer>

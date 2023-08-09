@@ -4,8 +4,14 @@
     border: none;
 }
 
-.react-calendar__month-view__weekdays, .react-calendar__navigation {
-    display: none !important;
+.react-calendar__navigation__label__labelText--from {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+button.react-calendar__navigation__label {
+    pointer-events: none;
 }
 
 button abbr {

@@ -23,6 +23,7 @@ import '@ionic/react/css/typography.css';
 import './theme/variables.css';
 import './theme/globals.css'
 import { ContextContainer } from './components/AppContext';
+import Board from './pages/Board';
 setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
@@ -34,6 +35,9 @@ const App: React.FC = () => (
           </Route>
           <Route path="/home" exact={true}>
             <Home />
+          </Route>
+          <Route path={"/avisos"}>
+            <Board />
           </Route>
         </ContextContainer>
       </IonRouterOutlet>
