@@ -18,6 +18,7 @@ import { FirstSession, SecondSession, SessionsContainer } from '../components/pa
 import { CalendarContainer, ModifiedCalendar } from '../components/Calendar';
 import { AppContext } from '../components/AppContext';
 import DrawerSlider from '../components/DrawerSlider';
+import Horarios from '../components/pagesComponents/Horarios';
 const Home: React.FC = () => {
   return (
     <IonPage id="home-page" className=' bg-bg'>
@@ -27,6 +28,7 @@ const Home: React.FC = () => {
           <CalendarContainer>
             <ModifiedCalendar />
           </CalendarContainer>
+          <Horarios />
           <DrawerSlider />
         </ColumnContainer>
       </IonContent>

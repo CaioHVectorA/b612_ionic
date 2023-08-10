@@ -7,13 +7,24 @@
 .react-calendar__navigation__label__labelText--from {
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
+}
+.react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus {
+    background-color: transparent;
+    padding: 6px;
+    background-color: var(--dark);
 }
 
-button.react-calendar__navigation__label {
+.react-calendar__tile--active {
+    color: black;
+}
+
+button.react-calendar__navigation__label, button.react-calendar__month-view__days__day--neighboringMonth {
     pointer-events: none;
 }
-
+.Kufam, .kufam {
+    font-family: 'Kufam';
+}
 button abbr {
     font-family: 'Kufam';
     font-size: 20px;
@@ -40,4 +51,18 @@ button abbr {
 /* fim de semana */
 .react-calendar__month-view__days__day--weekend {
     /* color: rgba(253, 255, 132, 0.7); */
+}
+
+.react-calendar__navigation button:not(.react-calendar__navigation__label) {
+    display: none;
+}
+
+.grid-numbers {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    justify-items: center;
+}
+
+.grid-numbers h3 {
+    text-align: center;
 }

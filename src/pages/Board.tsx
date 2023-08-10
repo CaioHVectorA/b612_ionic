@@ -6,7 +6,7 @@ import BoardMenu from "../components/pagesComponents/BoardMenu"
 
 const Board: React.FC = () => {
     return (
-        <IonPage className=" bg-bg">
+        <IonPage className=" bg-bg" style={{maxHeight: '100vh', overflowY: 'hidden'}}>
             <IonContent fullscreen>
                 <Avisos avisos={mockupArray}/>
                 <BoardMenu />
