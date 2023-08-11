@@ -42,6 +42,7 @@ function Horario({ Horario, Materia, Prof, Sala }: _Horario) {
         className={` bg-darkest flex transition-all justify-between rounded-2xl relative ${
           active ? "bottom-6" : "bottom-24 shadow-2xl"
         } -z-10 text-white p-6 pt-10`}
+        style={{marginBottom: !active ? '-70px' : '0px'}}
       >
         <div
           className={` absolute w-0.5 h-full bg-bg bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 ${

@@ -37,5 +37,12 @@ export function ReturnMonthByISO(ISO: string): number {
 }
 
 export function arrayDateNums(iso: string): number[] {
-    return [ReturnDateByISO(iso) - 2, ReturnDateByISO(iso) - 1, ReturnDateByISO(iso), ReturnDateByISO(iso) + 1, ReturnDateByISO(iso) + 2]
+    const data = [ReturnDateByISO(iso) - 2, ReturnDateByISO(iso) - 1, ReturnDateByISO(iso), ReturnDateByISO(iso) + 1, ReturnDateByISO(iso) + 2]
+    data.forEach((item, index) => {
+        if (item < 1) {
+            data[index] = 30 + index
+        }
+    });
+    console.log(data)
+    return data
 }
