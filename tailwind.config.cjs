@@ -5,10 +5,11 @@ module.exports = {
     extend: {
       colors: {
         bg: "#E8E8E7",
-        light: "#61C8D8",
-        main: "#546DF5",
-        dark: "#743DDB",
-        secondary: "#C159FA"
+        light: "#a39aff",
+        main: "#6d5fde",
+        dark: "#48436c",
+        secondary: "#ffc34c",
+        darkest: "#302c4d"
       },
       fontFamily: {
         main: ['Inria Sans','sans-serif'],
