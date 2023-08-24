@@ -41,8 +41,13 @@ export function arrayDateNums(iso: string): number[] {
     data.forEach((item, index) => {
         if (item < 1) {
             data[index] = 30 + index
+        } else if (item > 31) {
+            if (data[index - 1] === 1) {
+                data[index] = 2
+            } else {
+                data[index] = 1
+            }
         }
     });
-    console.log(data)
     return data
 }

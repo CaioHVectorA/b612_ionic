@@ -17,6 +17,7 @@ type _Horario = {
   Prof: string | null;
   Sala: number | null | string;
   Horario: string;
+  index: number
 };
 function HorariosContainer({ children }: SimpleContainer) {
   return (
@@ -25,9 +26,10 @@ function HorariosContainer({ children }: SimpleContainer) {
     </ColumnContainer>
   );
 }
-function Horario({ Horario, Materia, Prof, Sala }: _Horario) {
+function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
   const [active, setActive] = useState(false);
   const ref = useRef(null);
+  const isIndex = index === 1 || index === 6 || index === 9
   return (
     <ColumnContainer className=" z-50">
       <div
@@ -42,34 +44,34 @@ function Horario({ Horario, Materia, Prof, Sala }: _Horario) {
         className={` bg-darkest flex transition-all justify-between rounded-2xl relative ${
           active ? "bottom-6" : "bottom-24 shadow-2xl"
         } -z-10 text-white p-6 pt-10`}
-        style={{marginBottom: !active ? '-70px' : '0px'}}
+        style={{marginBottom: !active && !isIndex ? '-70px' : '0px'}}
       >
-        <div
-          className={` absolute w-0.5 h-full bg-bg bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 ${
-            active ? "opacity-25" : "opacity-0"
-          } `}
-        />
-        <ColumnContainer className=" w-[128px]">
+        <ColumnContainer className=" w-full items-center">
           <div className=" flex gap-2">
-            <p>Professor: </p>
+            <p>{`Professor (a): `}</p>
             <span className=" text-secondary">{Prof ? Prof : "Nenhum"}</span>
           </div>
           <div className=" flex gap-2">
             <p>{Horario}</p>
-            <span> | {Sala ? Sala : "Convivência"}</span>
+            <span>| {Sala ? Sala : "Convivência"}</span>
           </div>
         </ColumnContainer>
-        <p className=" text-secondary text-end">dasdaddasdad dasdaddasdad</p>
       </div>
     </ColumnContainer>
   );
 }
-
+type T_Horario = {
+  horario: string,
+  materia: string,
+  sala?: string,
+  professor?: string,
+  isBreak: boolean
+}
 export default function Horarios() {
   const { scrollValue, setScrollValue, day, setDay } = useContext(AppContext);
   const [sampleDay, setSample] = useState(day);
   const [numbers, setNumbers] = useState<number[]>(arrayDateNums(sampleDay));
-
+  const [horariosData, setHorarios] = useState<T_Horario[][]>([])
   function HandleSetNumber(num: number) {
     const data = new Date(sampleDay);
     data.setDate(data.getDate() + num);
@@ -78,6 +80,9 @@ export default function Horarios() {
   }
   useEffect(() => {
     setSample(day);
+    // IR NA API E BOTAR PRA SEMPRE DAR RESPONDE NO DIA ATUAL;
+    // TENTAR USAR NO LUGAR DO JSON
+    fetch('http://localhost:9128/all/3002').then(res => res.json()).then(data => setHorarios(data))
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day]);
   const Rotina = () => {
@@ -89,15 +94,42 @@ export default function Horarios() {
       return (
         <>
           <HorariosContainer>
-            {tempos?.Tempos.map((item) => (
-              <Horario
+            {horariosData.length > 0 && ReturnDayByISO(sampleDay) - 1 !== -1 && ReturnDayByISO(sampleDay) !== 5 ? <>
+              {horariosData[ReturnDayByISO(sampleDay) - 1].map(({horario, isBreak, materia, professor, sala}, index) => (
+                <>
+                  {isBreak ?
+                   <>
+                    <div className=" w-screen px-6 h-9 self-center">
+                      <div className=" bg-main flex flex-col items-center text-zinc-50 py-2 relative bottom-16">
+                        <p>
+                        {materia}
+                        </p>
+                        <p>
+                          {horario}
+                        </p>
+                      </div>
+                      
+                    </div>
+                   </> 
+                   :
+                  //  @ts-ignore
+                  <Horario index={index} Horario={horario} Sala={sala} Materia={materia} Prof={professor} key={horario} />}
+                </>
+              ))}
+            </> : 
+            <>
+              {tempos?.Tempos.map((item, index) => (
+                <Horario
                 Horario={item.Horario}
                 Materia={item.Materia}
                 Prof={item.Prof}
                 Sala={item.Sala}
+                index={0}
                 key={JSON.stringify(item)}
-              />
-            ))}
+                />
+                ))}
+            </>
+            }
           </HorariosContainer>
         </>
       );
