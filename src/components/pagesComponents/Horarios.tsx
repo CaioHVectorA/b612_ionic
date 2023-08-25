@@ -12,6 +12,7 @@ import {
 import days from "../DaysBackend.json";
 import { SimpleContainer } from "../../utils/types";
 import { LOGO } from "../../utils/assets";
+import { URL } from "../../utils/envariables";
 type _Horario = {
   Materia: string;
   Prof: string | null;
@@ -82,7 +83,7 @@ export default function Horarios() {
     setSample(day);
     // IR NA API E BOTAR PRA SEMPRE DAR RESPONDE NO DIA ATUAL;
     // TENTAR USAR NO LUGAR DO JSON
-    fetch('http://localhost:9128/all/3002').then(res => res.json()).then(data => setHorarios(data))
+    fetch(URL+'/all/3002').then(res => res.json()).then(data => setHorarios(data))
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day]);
   const Rotina = () => {
@@ -95,25 +96,31 @@ export default function Horarios() {
         <>
           <HorariosContainer>
             {horariosData.length > 0 && ReturnDayByISO(sampleDay) - 1 !== -1 && ReturnDayByISO(sampleDay) !== 5 ? <>
-              {horariosData[ReturnDayByISO(sampleDay) - 1].map(({horario, isBreak, materia, professor, sala}, index) => (
+              {horariosData[ReturnDayByISO(sampleDay) - 1].map((item: T_Horario | null, index) => (
                 <>
-                  {isBreak ?
-                   <>
-                    <div className=" w-screen px-6 h-9 self-center">
-                      <div className=" bg-main flex flex-col items-center text-zinc-50 py-2 relative bottom-16">
-                        <p>
-                        {materia}
-                        </p>
-                        <p>
-                          {horario}
-                        </p>
-                      </div>
-                      
+                {
+                  item ?
+                  <>
+                  {item.isBreak ?
+                    <>
+                    <div className={` w-screen px-6 h-9 self-center  ${index === 2 && !!!horariosData[ReturnDayByISO(sampleDay) - 1][0] ? 'next-mt' : ''}`}>
+                    <div className={` bg-main flex flex-col items-center text-zinc-50 py-2  ${index === 2 && !!!horariosData[ReturnDayByISO(sampleDay) - 1][0] ? 'bottom-4' : 'bottom-16'} relative`}>
+                    <p>
+                    {item.materia}
+                    </p>
+                    <p>
+                    {item.horario}
+                    </p>
                     </div>
-                   </> 
-                   :
-                  //  @ts-ignore
-                  <Horario index={index} Horario={horario} Sala={sala} Materia={materia} Prof={professor} key={horario} />}
+                    
+                    </div>
+                    </> 
+                    :
+                    //  @ts-ignore
+                    <Horario index={index} Horario={item.horario} Sala={item.sala} Materia={item.materia} Prof={item.professor} key={item.horario} />}
+                    </>
+                    : <></>
+                  }
                 </>
               ))}
             </> : 

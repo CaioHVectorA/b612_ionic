@@ -17,3 +17,7 @@
     --dark: #743DDB;
     --secondary: #C159FA;
 }
+
+.next-mt + div {
+    margin-top: 2rem;
+}
