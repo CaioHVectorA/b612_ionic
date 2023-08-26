@@ -12,7 +12,7 @@ import {
 import days from "../DaysBackend.json";
 import { SimpleContainer } from "../../utils/types";
 import { LOGO } from "../../utils/assets";
-import { URL } from "../../utils/envariables";
+import { TURMA, URL } from "../../utils/envariables";
 type _Horario = {
   Materia: string;
   Prof: string | null;
@@ -73,6 +73,7 @@ export default function Horarios() {
   const [sampleDay, setSample] = useState(day);
   const [numbers, setNumbers] = useState<number[]>(arrayDateNums(sampleDay));
   const [horariosData, setHorarios] = useState<T_Horario[][]>([]);
+  const { turma } = useContext(AppContext)
   function HandleSetNumber(num: number) {
     const data = new Date(sampleDay);
     data.setDate(data.getDate() + num);
@@ -83,7 +84,7 @@ export default function Horarios() {
     setSample(day);
     // IR NA API E BOTAR PRA SEMPRE DAR RESPONDE NO DIA ATUAL;
     // TENTAR USAR NO LUGAR DO JSON
-    fetch(URL + "/all/3002")
+    fetch(URL + "/all/"+turma)
       .then((res) => res.json())
       .then((data) => {
         setHorarios(data);
@@ -97,7 +98,7 @@ export default function Horarios() {
     );
     console.log(day);
     if (day) {
-      const tempos = day.Turmas.find((turma) => turma.Ref === 3002); // depois mudar pra turma em questão etc etc
+      const tempos = day.Turmas.find((_turma) => _turma.Ref === turma); // depois mudar pra turma em questão etc etc
       return (
         <>
           <HorariosContainer>
@@ -113,6 +114,7 @@ export default function Horarios() {
                           {item.isBreak ? (
                             <>
                               <div
+                                key={index}
                                 className={` w-screen px-6 h-9 self-center  ${
                                   index === 2 &&
                                   !!!horariosData[
@@ -123,6 +125,7 @@ export default function Horarios() {
                                 }`}
                               >
                                 <div
+                                  key={index}
                                   className={` bg-main flex flex-col items-center text-zinc-50 py-2  ${
                                     index === 2 &&
                                     !!!horariosData[
@@ -138,14 +141,15 @@ export default function Horarios() {
                               </div>
                             </>
                           ) : (
-                            //  @ts-ignore
                             <Horario
-                              index={index}
-                              Horario={item.horario}
-                              Sala={item.sala}
-                              Materia={item.materia}
-                              Prof={item.professor}
-                              key={item.horario}
+                            index={index}
+                            Horario={item.horario}
+                            //  @ts-ignore
+                            Sala={item.sala}
+                            Materia={item.materia}
+                            //  @ts-ignore
+                            Prof={item.professor}
+                            key={item.horario}
                             />
                           )}
                         </>
@@ -165,7 +169,7 @@ export default function Horarios() {
                     Prof={item.Prof}
                     Sala={item.Sala}
                     index={0}
-                    key={JSON.stringify(item)}
+                    key={index}
                   />
                 ))}
               </>

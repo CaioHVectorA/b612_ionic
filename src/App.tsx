@@ -24,6 +24,7 @@ import './theme/variables.css';
 import './theme/globals.css'
 import { ContextContainer } from './components/AppContext';
 import Board from './pages/Board';
+import Initial from './pages/Initial';
 setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
@@ -31,7 +32,9 @@ const App: React.FC = () => (
       <IonRouterOutlet>
         <ContextContainer>
           <Route path="/" exact={true}>
-            <Redirect to="/home" />
+            <Route path={'/'}>
+              <Initial />
+            </Route>
           </Route>
           <Route path="/home" exact={true}>
             <Home />
