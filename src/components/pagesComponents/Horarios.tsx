@@ -12,7 +12,7 @@ import {
 import days from "../DaysBackend.json";
 import { SimpleContainer } from "../../utils/types";
 import { LOGO } from "../../utils/assets";
-import { TURMA, URL } from "../../utils/envariables";
+import { URL } from "../../utils/envariables";
 type _Horario = {
   Materia: string;
   Prof: string | null;
