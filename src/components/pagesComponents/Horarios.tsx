@@ -62,11 +62,14 @@ function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
   );
 }
 type T_Horario = {
-  horario: string;
-  materia: string;
-  sala?: string;
-  professor?: string;
-  isBreak: boolean;
+  tempo: {
+    horario: string;
+    materia: string;
+    professor: string;
+    sala: string;
+    isBreak: boolean;
+  };
+  turma: string;
 };
 export default function Horarios() {
   const { scrollValue, setScrollValue, day, setDay } = useContext(AppContext);
@@ -84,7 +87,7 @@ export default function Horarios() {
     setSample(day);
     // IR NA API E BOTAR PRA SEMPRE DAR RESPONDE NO DIA ATUAL;
     // TENTAR USAR NO LUGAR DO JSON
-    fetch(URL + "/all/"+turma)
+    fetch(URL + "/horario/"+turma)
       .then((res) => res.json())
       .then((data) => {
         setHorarios(data);
@@ -111,7 +114,7 @@ export default function Horarios() {
                     <>
                       {item ? (
                         <>
-                          {item.isBreak ? (
+                          {item.tempo.isBreak ? (
                             <>
                               <div
                                 key={index}
@@ -135,21 +138,21 @@ export default function Horarios() {
                                       : "bottom-16"
                                   } relative`}
                                 >
-                                  <p>{item.materia}</p>
-                                  <p>{item.horario}</p>
+                                  <p>{item.tempo.materia}</p>
+                                  <p>{item.tempo.horario}</p>
                                 </div>
                               </div>
                             </>
                           ) : (
                             <Horario
                             index={index}
-                            Horario={item.horario}
+                            Horario={item.tempo.horario}
                             //  @ts-ignore
-                            Sala={item.sala}
-                            Materia={item.materia}
+                            Sala={item.tempo.sala}
+                            Materia={item.tempo.materia}
                             //  @ts-ignore
-                            Prof={item.professor}
-                            key={item.horario}
+                            Prof={item.tempo.professor}
+                            key={item.tempo.horario}
                             />
                           )}
                         </>
