@@ -2,6 +2,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import getRange from "../../utils/func/getRange";
 import { AppContext } from "../AppContext";
 import { ColumnContainer } from "../styled/container";
+import "../styled/horarios.css";
 import {
   ReturnDayByISO,
   ReturnMonthByISO,
@@ -42,10 +43,10 @@ function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
         <h3 className=" text-3xl">{Materia}</h3>
       </div>
       <div
-        className={` bg-darkest flex transition-all justify-between rounded-2xl relative ${
+        className={` bg-darkest horario flex transition-all justify-between rounded-2xl relative ${
           active ? "bottom-6" : "bottom-24 shadow-2xl"
         } -z-10 text-white p-6 pt-10`}
-        style={{ marginBottom: !active && !isIndex ? "-70px" : "0px" }}
+        // style={{ marginBottom: !active && !isIndex ? "-70px" : "0px" }}
       >
         <ColumnContainer className=" w-full items-center">
           <div className=" flex gap-2">
@@ -76,7 +77,7 @@ export default function Horarios() {
   const [sampleDay, setSample] = useState(day);
   const [numbers, setNumbers] = useState<number[]>(arrayDateNums(sampleDay));
   const [horariosData, setHorarios] = useState<T_Horario[][]>([]);
-  const { turma } = useContext(AppContext)
+  const { turma } = useContext(AppContext);
   function HandleSetNumber(num: number) {
     const data = new Date(sampleDay);
     data.setDate(data.getDate() + num);
@@ -87,7 +88,7 @@ export default function Horarios() {
     setSample(day);
     // IR NA API E BOTAR PRA SEMPRE DAR RESPONDE NO DIA ATUAL;
     // TENTAR USAR NO LUGAR DO JSON
-    fetch(URL + "/horario/"+turma)
+    fetch(URL + "/horario/" + turma)
       .then((res) => res.json())
       .then((data) => {
         setHorarios(data);
@@ -118,7 +119,7 @@ export default function Horarios() {
                             <>
                               <div
                                 key={index}
-                                className={` w-screen px-6 h-9 self-center  ${
+                                className={` w-screen px-6 h-9 break_horario self-center  ${
                                   index === 2 &&
                                   !!!horariosData[
                                     ReturnDayByISO(sampleDay) - 1
@@ -130,10 +131,11 @@ export default function Horarios() {
                                 <div
                                   key={index}
                                   className={` bg-main flex flex-col items-center text-zinc-50 py-2  ${
-                                    index === 2 &&
-                                    !!!horariosData[
-                                      ReturnDayByISO(sampleDay) - 1
-                                    ][0]
+                                    (index === 2 &&
+                                      !!!horariosData[
+                                        ReturnDayByISO(sampleDay) - 1
+                                      ][0]) ||
+                                    index === 0
                                       ? "bottom-4"
                                       : "bottom-16"
                                   } relative`}
@@ -145,14 +147,14 @@ export default function Horarios() {
                             </>
                           ) : (
                             <Horario
-                            index={index}
-                            Horario={item.tempo.horario}
-                            //  @ts-ignore
-                            Sala={item.tempo.sala}
-                            Materia={item.tempo.materia}
-                            //  @ts-ignore
-                            Prof={item.tempo.professor}
-                            key={item.tempo.horario}
+                              index={index}
+                              Horario={item.tempo.horario}
+                              //  @ts-ignore
+                              Sala={item.tempo.sala}
+                              Materia={item.tempo.materia}
+                              //  @ts-ignore
+                              Prof={item.tempo.professor}
+                              key={item.tempo.horario}
                             />
                           )}
                         </>
