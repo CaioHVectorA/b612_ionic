@@ -1,0 +1,9 @@
+.horario {
+  margin-bottom: -70px;
+}
+.break_horario ~ .horario,
+.break_horario + .horario {
+  /* display: none; */
+  /* bottom: 200px; */
+  /* margin-bottom: 0px; */
+}
