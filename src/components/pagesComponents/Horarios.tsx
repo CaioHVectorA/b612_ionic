@@ -14,6 +14,7 @@ import days from "../DaysBackend.json";
 import { SimpleContainer } from "../../utils/types";
 import { LOGO } from "../../utils/assets";
 import { URL } from "../../utils/envariables";
+const LOCALSTORAGE = "$$horarios";
 type _Horario = {
   Materia: string;
   Prof: string | null;
@@ -43,7 +44,9 @@ function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
         <h3 className=" text-3xl">{Materia}</h3>
       </div>
       <div
-        className={` bg-darkest horario flex transition-all justify-between rounded-2xl relative ${
+        className={` bg-darkest ${
+          !active && "horario"
+        } flex transition-all justify-between rounded-2xl relative ${
           active ? "bottom-6" : "bottom-24 shadow-2xl"
         } -z-10 text-white p-6 pt-10`}
         // style={{ marginBottom: !active && !isIndex ? "-70px" : "0px" }}
@@ -76,7 +79,10 @@ export default function Horarios() {
   const { scrollValue, setScrollValue, day, setDay } = useContext(AppContext);
   const [sampleDay, setSample] = useState(day);
   const [numbers, setNumbers] = useState<number[]>(arrayDateNums(sampleDay));
-  const [horariosData, setHorarios] = useState<T_Horario[][]>([]);
+  const [horariosData, setHorarios] = useState<T_Horario[][]>(
+    //@ts-ignore
+    JSON.parse(localStorage.getItem(LOCALSTORAGE)) || [],
+  );
   const { turma } = useContext(AppContext);
   function HandleSetNumber(num: number) {
     const data = new Date(sampleDay);
@@ -92,13 +98,13 @@ export default function Horarios() {
       .then((res) => res.json())
       .then((data) => {
         setHorarios(data);
-        console.log(data);
+        localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
       });
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day]);
   const Rotina = () => {
     const day = days.find(
-      (day) => day.Dia === weekDays[ReturnDayByISO(sampleDay)]
+      (day) => day.Dia === weekDays[ReturnDayByISO(sampleDay)],
     );
     console.log(day);
     if (day) {
@@ -162,7 +168,7 @@ export default function Horarios() {
                         <></>
                       )}
                     </>
-                  )
+                  ),
                 )}
               </>
             ) : (
