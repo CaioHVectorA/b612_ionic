@@ -14,6 +14,7 @@ import days from "../DaysBackend.json";
 import { SimpleContainer } from "../../utils/types";
 import { LOGO } from "../../utils/assets";
 import { LOCAL_STORAGE, URL } from "../../utils/envariables";
+import getMateriaImg from "../../utils/func/getMateriaImg";
 type _Horario = {
   Materia: string;
   Prof: string | null;
@@ -31,21 +32,23 @@ function HorariosContainer({ children }: SimpleContainer) {
 function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
   const [active, setActive] = useState(false);
   const ref = useRef(null);
-  const isIndex = Horario.includes('7:50') && Horario.includes('8:40') || Horario.includes('11:25') && Horario.includes('12:15') || Horario.includes('14:15') && Horario.includes('15:05')
   return (
-    <ColumnContainer className={` z-50 ${(!active && !isIndex) ? 'horario' : ''}`}>
+    <ColumnContainer className=" z-50">
       <div
         onClick={() => setActive(!active)}
         ref={ref}
         className=" bg-dark flex justify-around rounded-2xl p-3 items-center text-white"
       >
-        <img src={LOGO} className=" w-16" />
+        <img src={getMateriaImg(Materia)} className=" w-20 object-cover" />
         <h3 className=" text-3xl">{Materia}</h3>
       </div>
       <div
-        className={` bg-darkest flex transition-all justify-between rounded-2xl relative ${
+        className={` bg-darkest ${
+          !active && "horario"
+        } flex transition-all justify-between rounded-2xl relative ${
           active ? "bottom-6" : "bottom-24 shadow-2xl"
         } -z-10 text-white p-6 pt-10`}
+        // style={{ marginBottom: !active && !isIndex ? "-70px" : "0px" }}
       >
         <ColumnContainer className=" w-full items-center">
           <div className=" flex gap-2">
@@ -75,8 +78,7 @@ export default function Horarios() {
   const { scrollValue, setScrollValue, day, setDay } = useContext(AppContext);
   const [sampleDay, setSample] = useState(day);
   const [numbers, setNumbers] = useState<number[]>(arrayDateNums(sampleDay));
-  //@ts-ignore
-  const [horariosData, setHorarios] = useState<T_Horario[][]>(JSON.parse(localStorage.getItem(LOCAL_STORAGE.HORARIOS_DATA)) || []);
+  const [horariosData, setHorarios] = useState<T_Horario[][]>([]);
   const { turma } = useContext(AppContext);
   function HandleSetNumber(num: number) {
     const data = new Date(sampleDay);
@@ -92,23 +94,11 @@ export default function Horarios() {
       .then((res) => res.json())
       .then((data) => {
         setHorarios(data);
-        localStorage.setItem(LOCAL_STORAGE.HORARIOS_DATA, JSON.stringify(data))
+        console.log(data);
       });
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day]);
   const Rotina = () => {
-    // if (localStorage.getItem(LOCAL_STORAGE.HORARIOS_DATA)) temp = JSON.parse(localStorage.getItem(LOCAL_STORAGE.HORARIOS_DATA))
-    // console.log(weekDays, days, horariosData)
-    // temp.find(
-    //   (day, index) => index === weekDays[ReturnDayByISO(sampleDay)]
-    // );
-    // if (day) {
-      // const tempos = day.Turmas.find((_turma) => _turma.Ref === turma); // depois mudar pra turma em questão etc etc
-      if (ReturnDayByISO(sampleDay) === 0 || ReturnDayByISO(sampleDay) === 6) {
-        return (
-          <h1>Hoje não há aula, aproveite o seu dia!</h1>
-        )
-      }
       return (
         <>
           <HorariosContainer>
@@ -168,7 +158,7 @@ export default function Horarios() {
                         <></>
                       )}
                     </>
-                  )
+                  ),
                 )}
               </>
             ) : (
@@ -179,7 +169,6 @@ export default function Horarios() {
           </HorariosContainer>
         </>
       );
-    // }
   };
   if (getRange(scrollValue) > 0.15) return;
   return (
