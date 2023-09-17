@@ -78,7 +78,8 @@ export default function Horarios() {
   const { scrollValue, setScrollValue, day, setDay } = useContext(AppContext);
   const [sampleDay, setSample] = useState(day);
   const [numbers, setNumbers] = useState<number[]>(arrayDateNums(sampleDay));
-  const [horariosData, setHorarios] = useState<T_Horario[][]>([]);
+  //@ts-ignore
+  const [horariosData, setHorarios] = useState<T_Horario[][]>(JSON.parse(localStorage.getItem(LOCAL_STORAGE.HORARIOS_DATA)) || []);
   const { turma } = useContext(AppContext);
   function HandleSetNumber(num: number) {
     const data = new Date(sampleDay);
@@ -88,16 +89,15 @@ export default function Horarios() {
   }
   useEffect(() => {
     setSample(day);
-    // IR NA API E BOTAR PRA SEMPRE DAR RESPONDE NO DIA ATUAL;
-    // TENTAR USAR NO LUGAR DO JSON
     fetch(URL + "/horario/" + turma)
-      .then((res) => res.json())
-      .then((data) => {
+    .then((res) => res.json())
+    .then((data) => {
+        localStorage.setItem(LOCAL_STORAGE.HORARIOS_DATA, JSON.stringify(data))    
         setHorarios(data);
-        console.log(data);
       });
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day]);
+  useEffect(() => console.log(horariosData),[horariosData])
   const Rotina = () => {
       return (
         <>
@@ -162,10 +162,13 @@ export default function Horarios() {
                 )}
               </>
             ) : (
-              <>
-              <h1>Carregando...</h1>
-              </>
+              <div className=" w-full items-center gap-6 flex flex-col text-center">
+              <h1 className=" text-3xl font-bold">Hoje não há aula!</h1>
+              <h3>Aproveite o seu dia! {':)'}</h3>
+              <img src="/free_il.png"/>
+              </div>
             )}
+            {horariosData.length === 0 && <h1>Carregando...</h1>}
           </HorariosContainer>
         </>
       );

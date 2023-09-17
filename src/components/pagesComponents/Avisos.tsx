@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ColumnContainer } from "../styled/container";
-import { URL } from "../../utils/envariables";
+import { LOCAL_STORAGE, URL } from "../../utils/envariables";
 
 
 type AvisoProps = {
@@ -38,9 +38,13 @@ function Aviso({ author, body, title, index, img, tags, length }: AvisoProps & {
 }
 
 export default function Avisos() {
-  const [avisos, setAvisos] = useState<AvisoProps[]>([])
+  //@ts-ignore
+  const [avisos, setAvisos] = useState<AvisoProps[]>(JSON.parse(localStorage.getItem(LOCAL_STORAGE.AVISOS_DATA)) || [])
   useEffect(() => {
-    fetch(URL+'/aviso/').then(res => res.json()).then(data => setAvisos(data))
+    fetch(URL+'/aviso/').then(res => res.json()).then(data => {
+      localStorage.setItem(LOCAL_STORAGE.AVISOS_DATA, JSON.stringify(data))
+      setAvisos(data)
+    })
   }, [])
   return (
     <div className=" flex flex-row-reverse overflow-x-auto scroll-smooth gap-3 snap-x snap-mandatory h-4/5">
