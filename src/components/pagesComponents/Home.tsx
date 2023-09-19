@@ -38,9 +38,9 @@ export function SecondSession() {
                 <img style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
             </div>
         : 
-        <div className="bg-dark py-3 rounded-b-3xl fixed top-0 z-50">
+        <div className="bg-dark pt-3 rounded-b-3xl fixed top-0 z-50">
                 <div className=" flex w-screen px-3 justify-between rounded-b-3xl items-center">
-                    <img style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
+                    <img onClick={() => setScrollValue(0)} style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
                     <Link to={'/avisos'}>
                         <IonIcon ios={notifications} md={notifications} style={{ fontSize: '32px' }} />
                     </Link>

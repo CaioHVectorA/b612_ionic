@@ -18,6 +18,12 @@
     --secondary: #C159FA;
 }
 
+body {
+    /* max-width: 768px; */
+    /* width: fit-content; */
+    margin: 0 auto;
+}
+
 .next-mt + div {
     margin-top: 2rem;
 }
