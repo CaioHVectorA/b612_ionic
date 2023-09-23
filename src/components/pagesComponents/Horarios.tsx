@@ -2,6 +2,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import getRange from "../../utils/func/getRange";
 import { AppContext } from "../AppContext";
 import { ColumnContainer } from "../styled/container";
+import { error } from 'veclog'
 import "../styled/horarios.css";
 import {
   ReturnDayByISO,
@@ -94,10 +95,9 @@ export default function Horarios() {
     .then((data) => {
         localStorage.setItem(LOCAL_STORAGE.HORARIOS_DATA, JSON.stringify(data))    
         setHorarios(data);
-      });
+      }).catch(err => error(err, false))
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day]);
-  useEffect(() => console.log(horariosData),[horariosData])
   const Rotina = () => {
       return (
         <>
@@ -176,17 +176,17 @@ export default function Horarios() {
   if (getRange(scrollValue) > 0.15) return;
   return (
     <ColumnContainer
-      className=" items-center my-6 -z-50"
+      className=" items-center my-6 -z-50 bg-dark"
       style={{
         paddingTop: `${window.innerHeight / 6 + scrollValue / 12 + 72}px`,
       }}
     >
-      <div className=" grid-numbers px-2 w-screen mb-2">
+      <div className=" grid-numbers items-center px-2 w-screen mb-2">
         {numbers.map((item: number, index) => (
           <h3
             onClick={() => HandleSetNumber(index - 2)}
-            className={` w-8 text-2xl kufam ${
-              index === 2 && " text-2xl text-dark"
+            className={` w-8 text-white kufam ${
+              index === 2 ? " text-2xl text-main" : "text-md"
             }`}
             key={item}
           >
@@ -194,7 +194,7 @@ export default function Horarios() {
           </h3>
         ))}
       </div>
-      <h3>
+      <h3 className=" text-white">
         {weekDays[ReturnDayByISO(sampleDay)]},{" "}
         {months[ReturnMonthByISO(sampleDay)]}
       </h3>

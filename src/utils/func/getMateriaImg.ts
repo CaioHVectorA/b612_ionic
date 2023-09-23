@@ -19,7 +19,6 @@ const materias: mat[] = [
 export default function getMateriaImg(materia: string): string {
     const materiaFound = materias.find(mat => {
         return mat.refs.find((mat) => {
-            console.log(materia.toUpperCase(), mat.toUpperCase())
             if (materia.toUpperCase().includes(mat.toUpperCase())) {
             return true
         }})

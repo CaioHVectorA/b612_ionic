@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ColumnContainer } from "../styled/container";
 import { LOCAL_STORAGE, URL } from "../../utils/envariables";
+import { error } from "veclog";
 
 
 type AvisoProps = {
@@ -44,7 +45,7 @@ export default function Avisos() {
     fetch(URL+'/aviso/').then(res => res.json()).then(data => {
       localStorage.setItem(LOCAL_STORAGE.AVISOS_DATA, JSON.stringify(data))
       setAvisos(data)
-    })
+    }).catch(err => error(err,true))
   }, [])
   return (
     <div className=" flex flex-row-reverse overflow-x-auto scroll-smooth gap-3 snap-x snap-mandatory h-4/5">

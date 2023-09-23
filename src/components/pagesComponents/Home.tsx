@@ -38,7 +38,7 @@ export function SecondSession() {
                 <img style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
             </div>
         : 
-        <div className="bg-dark pt-3 rounded-b-3xl fixed top-0 z-50">
+        <div className=" bg-light pt-3 rounded-b-3xl fixed top-0 z-50">
                 <div className=" flex w-screen px-3 justify-between rounded-b-3xl items-center">
                     <img onClick={() => setScrollValue(0)} style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
                     <Link to={'/avisos'}>
