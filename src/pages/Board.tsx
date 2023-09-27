@@ -8,7 +8,7 @@ const Board: React.FC = () => {
     return (
         <IonPage className=" bg-bg" style={{maxHeight: '100vh', overflowY: 'hidden'}}>
             <IonContent fullscreen>
-                <Avisos avisos={mockupArray}/>
+                <Avisos />
                 <BoardMenu />
             </IonContent>
         </IonPage>

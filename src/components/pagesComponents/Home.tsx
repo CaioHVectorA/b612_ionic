@@ -10,11 +10,11 @@ import getRange from "../../utils/func/getRange";
 import DrawerSlider from "../DrawerSlider";
 import { Link } from "react-router-dom";
 export function FirstSession() {
-    const { scrollValue, setScrollValue } = useContext(AppContext)
+    const { scrollValue, setScrollValue, name } = useContext(AppContext)
     const range = getRange(scrollValue)
     return (
         <div className={`justify-between w-screen px-5 pt-5 items-center ${range < 0.15 ? 'hidden' : 'flex'}`}>
-        <Title>Olá <b>vagabundo</b></Title>
+        <Title>Olá <b>{name}</b></Title>
         <Link to={'/avisos'}>
             <IonIcon ios={notifications} md={notifications} style={{ fontSize: '20px' }} />
         </Link>
@@ -38,7 +38,7 @@ export function SecondSession() {
                 <img style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
             </div>
         : 
-        <div className=" bg-light pt-3 rounded-b-3xl fixed top-0 z-50">
+        <div className=" bg-light shadow-2xl pt-3 rounded-b-3xl fixed top-0 z-50">
                 <div className=" flex w-screen px-3 justify-between rounded-b-3xl items-center">
                     <img onClick={() => setScrollValue(0)} style={{height: `${window.innerHeight / 6 + scrollValue / 12}px`}} src={logo} />
                     <Link to={'/avisos'}>
@@ -46,7 +46,7 @@ export function SecondSession() {
                     </Link>
                 </div>
                 <DrawerSlider />
-            </div>
+        </div>
         }
         </>
     )

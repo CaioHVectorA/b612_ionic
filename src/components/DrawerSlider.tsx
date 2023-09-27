@@ -28,22 +28,12 @@ export default function DrawerSlider() {
     useEffect(() => {
         if (divisionPoint) {
             setTransition('0.5s')
-            // const interval = setInterval(() => {
-            //     if (scrollValue < 0) {
-            //       console.log(scrollValue)
-            //       const num = scrollValue + 1
-            //       setScrollValue(num)
-            //     }
-            //   }, 10)
-          
-            //   return () => clearInterval(interval);
-            // TENTATIVA DE DEIXAR SUAVE A DESLIZADA PRA BAIXO...
             setScrollValue(0)
         }
     }, [divisionPoint])
     return (
         <div className={divisionPoint ? 'fixed bottom-4 w-screen flex justify-center items-center py-12' : 'py-4 w-screen flex justify-center items-center'}  onTouchMove={handleTouch} onTouchEnd={handleLeave} style={{transform: divisionPoint ? `translate(0%,${scrollValue}px)` : 'translate(0px,0px)', transition: transitionValue}}>
-            <div className={divisionPoint ?  'rounded-full h-4 w-1/3 bg-black opacity-40' : 'rounded-full h-2 w-1/3 mx-auto bg-white opacity-70'} />
+            <div className={divisionPoint ?  'rounded-full h-4 w-1/3 bg-black opacity-40 ' : 'rounded-full h-2 w-1/3 mx-auto bg-white opacity-70'} />
         </div>
     )
 } 
