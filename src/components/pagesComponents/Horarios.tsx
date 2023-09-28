@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import getRange from "../../utils/func/getRange";
 import { AppContext } from "../AppContext";
 import { ColumnContainer } from "../styled/container";
-import { error } from 'veclog'
+import { error } from "veclog";
 import "../styled/horarios.css";
 import {
   ReturnDayByISO,
@@ -80,7 +80,10 @@ export default function Horarios() {
   const [sampleDay, setSample] = useState(day);
   const [numbers, setNumbers] = useState<number[]>(arrayDateNums(sampleDay));
   //@ts-ignore
-  const [horariosData, setHorarios] = useState<T_Horario[][]>(JSON.parse(localStorage.getItem(LOCAL_STORAGE.HORARIOS_DATA)) || []);
+  const [horariosData, setHorarios] = useState<T_Horario[][]>(
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE.HORARIOS_DATA)) || []
+  );
+
   const { turma } = useContext(AppContext);
   function HandleSetNumber(num: number) {
     const data = new Date(sampleDay);
@@ -91,87 +94,90 @@ export default function Horarios() {
   useEffect(() => {
     setSample(day);
     fetch(URL + "/horario/" + turma)
-    .then((res) => res.json())
-    .then((data) => {
-        localStorage.setItem(LOCAL_STORAGE.HORARIOS_DATA, JSON.stringify(data))    
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem(LOCAL_STORAGE.HORARIOS_DATA, JSON.stringify(data));
         setHorarios(data);
-      }).catch(err => error(err, false))
+      })
+      .catch((err) => error(err, false));
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day]);
   const Rotina = () => {
-      return (
-        <>
-          <HorariosContainer>
-            {horariosData.length > 0 &&
-            ReturnDayByISO(sampleDay) - 1 !== -1 &&
-            ReturnDayByISO(sampleDay) !== 6 ? (
-              <>
-                {horariosData[ReturnDayByISO(sampleDay) - 1].map(
-                  (item: T_Horario | null, index) => (
-                    <>
-                      {item ? (
-                        <>
-                          {item.tempo.isBreak ? (
-                            <>
+    return (
+      <>
+        <HorariosContainer>
+          {horariosData.length > 0 &&
+          ReturnDayByISO(sampleDay) - 1 !== -1 &&
+          ReturnDayByISO(sampleDay) !== 6 ? (
+            <>
+              {horariosData[ReturnDayByISO(sampleDay) - 1].map(
+                (item: T_Horario | null, index) => (
+                  <>
+                    {item ? (
+                      <>
+                        {item.tempo.isBreak ? (
+                          <>
+                            <div
+                              key={index}
+                              className={` w-screen px-6 h-9 break_horario self-center  ${
+                                index === 2 &&
+                                !!!horariosData[
+                                  ReturnDayByISO(sampleDay) - 1
+                                ][0]
+                                  ? "next-mt"
+                                  : ""
+                              }`}
+                            >
                               <div
                                 key={index}
-                                className={` w-screen px-6 h-9 break_horario self-center  ${
-                                  index === 2 &&
-                                  !!!horariosData[
-                                    ReturnDayByISO(sampleDay) - 1
-                                  ][0]
-                                    ? "next-mt"
-                                    : ""
-                                }`}
+                                className={` bg-dark flex px-6 justify-center gap-6 py-3 items-center text-zinc-50 py-2  ${
+                                  (index === 2 &&
+                                    !!!horariosData[
+                                      ReturnDayByISO(sampleDay) - 1
+                                    ][0]) ||
+                                  index === 0
+                                    ? "bottom-4"
+                                    : "bottom-16"
+                                } relative`}
                               >
-                                <div
-                                  key={index}
-                                  className={` bg-main flex flex-col items-center text-zinc-50 py-2  ${
-                                    (index === 2 &&
-                                      !!!horariosData[
-                                        ReturnDayByISO(sampleDay) - 1
-                                      ][0]) ||
-                                    index === 0
-                                      ? "bottom-4"
-                                      : "bottom-16"
-                                  } relative`}
-                                >
-                                  <p>{item.tempo.materia}</p>
-                                  <p>{item.tempo.horario}</p>
-                                </div>
+                                <p className=" text-3xl">
+                                  {item.tempo.materia}
+                                </p>
+                                <p className=" text-xl">{item.tempo.horario}</p>
                               </div>
-                            </>
-                          ) : (
-                            <Horario
-                              index={index}
-                              Horario={item.tempo.horario}
-                              //  @ts-ignore
-                              Sala={item.tempo.sala}
-                              Materia={item.tempo.materia}
-                              //  @ts-ignore
-                              Prof={item.tempo.professor}
-                              key={item.tempo.horario}
-                            />
-                          )}
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </>
-                  ),
-                )}
-              </>
-            ) : (
-              <div className=" w-full items-center gap-6 flex flex-col text-center">
+                            </div>
+                          </>
+                        ) : (
+                          <Horario
+                            index={index}
+                            Horario={item.tempo.horario}
+                            //  @ts-ignore
+                            Sala={item.tempo.sala}
+                            Materia={item.tempo.materia}
+                            //  @ts-ignore
+                            Prof={item.tempo.professor}
+                            key={item.tempo.horario}
+                          />
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                )
+              )}
+            </>
+          ) : (
+            <div className=" w-full items-center gap-6 flex flex-col text-center">
               <h1 className=" text-3xl font-bold">Hoje não há aula!</h1>
-              <h3>Aproveite o seu dia! {':)'}</h3>
-              <img src="/free_il.png"/>
-              </div>
-            )}
-            {horariosData.length === 0 && <h1>Carregando...</h1>}
-          </HorariosContainer>
-        </>
-      );
+              <h3>Aproveite o seu dia! {":)"}</h3>
+              <img src="/free_il.png" />
+            </div>
+          )}
+          {horariosData.length === 0 && <h1>Carregando...</h1>}
+        </HorariosContainer>
+      </>
+    );
   };
   if (getRange(scrollValue) > 0.15) return;
   return (
@@ -186,7 +192,7 @@ export default function Horarios() {
           <h3
             onClick={() => HandleSetNumber(index - 2)}
             className={` w-8 text-white kufam ${
-              index === 2 ? " text-2xl text-main" : "text-md"
+              index === 2 ? " text-3xl text-main" : "text-xl"
             }`}
             key={item}
           >

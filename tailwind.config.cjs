@@ -9,13 +9,13 @@ module.exports = {
         main: "#6d5fde",
         dark: "#48436c",
         secondary: "#ffc34c",
-        darkest: "#302c4d"
+        darkest: "#302c4d",
       },
       fontFamily: {
-        main: ['Inria Sans','sans-serif'],
-        number: ['Kufam','sans-serif']
-      }
+        main: ["Inria Sans", "sans-serif"],
+        number: ["Kufam", "sans-serif"],
+      },
     },
   },
   plugins: [],
-}
+};
