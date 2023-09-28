@@ -2,28 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
-    font-family: 'Inria Sans';
-    padding: 0px;
-    margin: 0px;
-    box-sizing: border-box;
+  font-family: "Inria Sans";
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
 }
 
 :root {
-    --bg: #E8E8E7;
-    --light: #61C8D8;
-    --main: #546DF5;
-    --dark: #743DDB;
-    --secondary: #C159FA;
+  --bg: #e8e8e7;
+  --light: #61c8d8;
+  --main: #546df5;
+  --dark: #743ddb;
+  --secondary: #c159fa;
 }
 
 body {
-    /* max-width: 768px; */
-    /* width: fit-content; */
-    margin: 0 auto;
+  /* max-width: 768px; */
+  /* width: fit-content; */
+  margin: 0 auto;
 }
 
 .next-mt + div {
-    margin-top: 2rem;
+  margin-top: 2rem;
+}
+
+@font-face {
+  font-family: "Streamy";
+  src: url("./Streamy-Light.ttf");
+}
+
+* {
+  font-family: "Streamy" !important;
 }

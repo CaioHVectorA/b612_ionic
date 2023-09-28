@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Message, getMessages } from "../data/messages";
 import {
   IonContent,
@@ -23,7 +23,28 @@ import { CalendarContainer, ModifiedCalendar } from "../components/Calendar";
 import { AppContext } from "../components/AppContext";
 import DrawerSlider from "../components/DrawerSlider";
 import Horarios from "../components/pagesComponents/Horarios";
+import { LOCAL_STORAGE } from "../utils/envariables";
 const Home: React.FC = () => {
+  const { turma, setTurma, name, setName } = useContext(AppContext);
+  useEffect(() => {
+    const hasUser = localStorage.getItem(LOCAL_STORAGE.USER_DATA);
+    if (hasUser) {
+      const infos = JSON.parse(hasUser);
+      console.log(infos.turma);
+      console.log("jklsadjkldsajkld");
+      if (
+        ![
+          1001, 1002, 1003, 1004, 2001, 2002, 2003, 2004, 3001, 3002, 3003,
+          3004,
+        ].includes(infos.turma)
+      ) {
+        return;
+      }
+      console.log("jklsadjkldsajkld");
+      setName(infos.user);
+      setTurma(infos.turma);
+    }
+  }, []);
   return (
     <IonPage id="home-page" className=" bg-bg">
       <IonContent fullscreen>
