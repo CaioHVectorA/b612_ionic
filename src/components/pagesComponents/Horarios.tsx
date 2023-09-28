@@ -79,11 +79,10 @@ export default function Horarios() {
   const { scrollValue, setScrollValue, day, setDay } = useContext(AppContext);
   const [sampleDay, setSample] = useState(day);
   const [numbers, setNumbers] = useState<number[]>(arrayDateNums(sampleDay));
-  //@ts-ignore
   const [horariosData, setHorarios] = useState<T_Horario[][]>(
+    //@ts-ignore
     JSON.parse(localStorage.getItem(LOCAL_STORAGE.HORARIOS_DATA)) || []
   );
-
   const { turma } = useContext(AppContext);
   function HandleSetNumber(num: number) {
     const data = new Date(sampleDay);
@@ -92,6 +91,7 @@ export default function Horarios() {
     setNumbers(arrayDateNums(data.toISOString()));
   }
   useEffect(() => {
+    if (turma === 0) window.location.pathname = "/";
     setSample(day);
     fetch(URL + "/horario/" + turma)
       .then((res) => res.json())
@@ -101,7 +101,7 @@ export default function Horarios() {
       })
       .catch((err) => error(err, false));
     setNumbers(arrayDateNums(new Date(day).toISOString()));
-  }, [day]);
+  }, [day, turma]);
   const Rotina = () => {
     return (
       <>

@@ -32,14 +32,14 @@ const Home: React.FC = () => {
       const infos = JSON.parse(hasUser);
       console.log(infos.turma);
       console.log("jklsadjkldsajkld");
-      if (
-        ![
-          1001, 1002, 1003, 1004, 2001, 2002, 2003, 2004, 3001, 3002, 3003,
-          3004,
-        ].includes(infos.turma)
-      ) {
-        return;
-      }
+      // if (
+      //   ![
+      //     1001, 1002, 1003, 1004, 2001, 2002, 2003, 2004, 3001, 3002, 3003,
+      //     3004,
+      //   ].includes(infos.turma)
+      // ) {
+      //   return;
+      // }
       console.log("jklsadjkldsajkld");
       setName(infos.user);
       setTurma(infos.turma);
