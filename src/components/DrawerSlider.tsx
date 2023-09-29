@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { AppContext } from './AppContext'
 import getRange from '../utils/func/getRange'
 const breakpoint = window.innerHeight / 7.2 + 24
-export default function DrawerSlider() {
+export default function DrawerSlider({isCalendar = false}: {isCalendar?: boolean}) {
     const { scrollValue, setScrollValue } = useContext(AppContext)
     const [prevValue,setValue] = useState(scrollValue)
     const [transitionValue, setTransition] = useState<string>('0.1s')
@@ -32,7 +32,7 @@ export default function DrawerSlider() {
         }
     }, [divisionPoint])
     return (
-        <div className={divisionPoint ? 'fixed bottom-4 w-screen flex justify-center items-center py-12' : 'py-4 w-screen flex justify-center items-center'}  onTouchMove={handleTouch} onTouchEnd={handleLeave} style={{transform: divisionPoint ? `translate(0%,${scrollValue}px)` : 'translate(0px,0px)', transition: transitionValue}}>
+        <div className={divisionPoint ? `fixed ${isCalendar ? 'bottom-2' : 'bottom-4 py-12'} w-screen flex justify-center items-center` : 'py-4 w-screen flex justify-center items-center'}  onTouchMove={handleTouch} onTouchEnd={handleLeave} style={{transform: divisionPoint ? `translate(0%,${scrollValue}px)` : 'translate(0px,0px)', transition: transitionValue}}>
             <div className={divisionPoint ?  'rounded-full h-4 w-1/3 bg-black opacity-40 ' : 'rounded-full h-2 w-1/3 mx-auto bg-white opacity-70'} />
         </div>
     )

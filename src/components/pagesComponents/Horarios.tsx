@@ -182,7 +182,7 @@ export default function Horarios() {
   if (getRange(scrollValue) > 0.15) return;
   return (
     <ColumnContainer
-      className=" items-center my-6 -z-50 bg-dark"
+      className=" items-center mt-6 -z-50 bg-dark"
       style={{
         paddingTop: `${window.innerHeight / 6 + scrollValue / 12 + 72}px`,
       }}

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npx ionic build && npx ionic cap add android",
+    "build": "npx ionic build && npx ionic cap update android",
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",

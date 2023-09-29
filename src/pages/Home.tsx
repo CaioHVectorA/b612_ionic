@@ -31,7 +31,6 @@ const Home: React.FC = () => {
     if (hasUser) {
       const infos = JSON.parse(hasUser);
       console.log(infos.turma);
-      console.log("jklsadjkldsajkld");
       // if (
       //   ![
       //     1001, 1002, 1003, 1004, 2001, 2002, 2003, 2004, 3001, 3002, 3003,
@@ -40,7 +39,6 @@ const Home: React.FC = () => {
       // ) {
       //   return;
       // }
-      console.log("jklsadjkldsajkld");
       setName(infos.user);
       setTurma(infos.turma);
     }
@@ -54,7 +52,9 @@ const Home: React.FC = () => {
             <ModifiedCalendar />
           </CalendarContainer>
           <Horarios />
-          <DrawerSlider />
+          <div className=" absolute bottom-0">
+            <DrawerSlider isCalendar/>
+          </div>
         </ColumnContainer>
       </IonContent>
     </IonPage>
