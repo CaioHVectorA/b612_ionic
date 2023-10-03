@@ -30,9 +30,23 @@ button abbr {
     font-size: 20px;
 }
 .react-calendar__tile {
-    border: 1px solid var(--dark) !important;
+    /* border: 1px solid var(--dark) !important; */
+    border: none !important;
+    font-weight: bold;
 }
-
+.react-calendar__tile--now abbr {
+    background-color: var(--dark) !important;
+    padding: 6px;
+    border-radius: 50%;
+    color: #d9d9d9;
+    aspect-ratio: 1/1;
+    display: block;
+    margin: 0 auto;
+    width: 24px !important;
+}
+.react-calendar__month-view__days__day--weekend {
+    color: var(--dark);
+}
 .calendar__borderTop {
     border-top: 1px solid transparent !important;
 }

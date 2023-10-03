@@ -2,6 +2,7 @@ import { IonIcon } from "@ionic/react";
 import { notifications } from "ionicons/icons";
 import { Title } from "../styled/titles";
 import logo from "../../../public/logo.png";
+import logo2 from "../../../public/logo2.png";
 import { ColumnContainer } from "../styled/container";
 import { SimpleContainer } from "../../utils/types";
 import {
@@ -62,7 +63,7 @@ export function SecondSession() {
               style={{
                 height: `${window.innerHeight / 6 + scrollValue / 12}px`,
               }}
-              src={logo}
+              src={logo2}
             />
             <Link to={"/avisos"}>
               <IonIcon

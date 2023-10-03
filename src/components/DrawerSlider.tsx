@@ -32,7 +32,7 @@ export default function DrawerSlider({isCalendar = false}: {isCalendar?: boolean
         }
     }, [divisionPoint])
     return (
-        <div className={divisionPoint ? `fixed ${isCalendar ? 'bottom-2' : 'bottom-4 py-12'} w-screen flex justify-center items-center` : 'py-4 w-screen flex justify-center items-center'}  onTouchMove={handleTouch} onTouchEnd={handleLeave} style={{transform: divisionPoint ? `translate(0%,${scrollValue}px)` : 'translate(0px,0px)', transition: transitionValue}}>
+        <div className={divisionPoint ? `fixed ${isCalendar ? 'bottom-2 py-5' : 'bottom-4 py-12'} w-screen flex justify-center items-center` : 'py-4 w-screen flex justify-center items-center'}  onTouchMove={handleTouch} onTouchEnd={handleLeave} style={{transform: divisionPoint ? `translate(0%,${scrollValue}px)` : 'translate(0px,0px)', transition: transitionValue}}>
             <div className={divisionPoint ?  'rounded-full h-4 w-1/3 bg-black opacity-40 ' : 'rounded-full h-2 w-1/3 mx-auto bg-white opacity-70'} />
         </div>
     )
