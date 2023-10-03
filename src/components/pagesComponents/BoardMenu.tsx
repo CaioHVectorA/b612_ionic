@@ -1,5 +1,5 @@
 import { IonIcon } from "@ionic/react";
-import logo from "../../../public/logo.png";
+import logo from "../../../public/loguinho.png";
 import { Link } from "react-router-dom";
 import { home, chevronBack } from "ionicons/icons";
 export default function BoardMenu() {
@@ -8,7 +8,7 @@ export default function BoardMenu() {
       <div className=" relative">
         <img
           className=" absolute w-24 left-6"
-          style={{ bottom: "-64px" }}
+          style={{ top: "-16px" }}
           src={logo}
         />
       </div>

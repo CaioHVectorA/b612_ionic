@@ -1,7 +1,7 @@
 import { IonIcon } from "@ionic/react";
 import { notifications } from "ionicons/icons";
 import { Title } from "../styled/titles";
-import logo from "../../../public/logo.png";
+import logo from "../../../public/loguinho.png";
 import { ColumnContainer } from "../styled/container";
 import { SimpleContainer } from "../../utils/types";
 import {
