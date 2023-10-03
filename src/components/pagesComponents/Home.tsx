@@ -51,6 +51,7 @@ export function SecondSession() {
       {!breakpoint ? (
         <div className=" flex w-screen bg-darkest px-3 py-1 justify-center rounded-3xl">
           <img
+            className="animation-rocket"
             style={{ height: `${window.innerHeight / 6 + scrollValue / 12}px` }}
             src={logo}
           />

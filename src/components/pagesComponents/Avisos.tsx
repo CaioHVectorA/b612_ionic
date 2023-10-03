@@ -29,7 +29,7 @@ function Aviso({
         marginRight: index === 0 ? "16px" : "0px",
       }}
     >
-      <div className=" rounded-3xl bg-light h-1/5 w-72 flex gap-2 px-2 items-center py-4">
+      <div className=" rounded-3xl bg-light h-1/5 w-56 flex gap-2 px-2 items-center py-4">
         <img
           src={img}
           className=" rounded-full max-w-full aspect-square object-center object-cover" // IMAGEM SERÁ QUADRADOS
@@ -37,7 +37,7 @@ function Aviso({
         />
         <h1 className="uppercase text-3xl align-baseline text-bg">{author}</h1>
       </div>
-      <div className=" rounded-3xl bg-dark text-white shadow-xl px-3 py-2 h-4/5 w-72">
+      <div className=" rounded-3xl bg-dark text-white shadow-xl px-3 py-2 h-4/5 w-56">
         <h1 className=" w-full text-center text-2xl font-bold mb-3 uppercase">
           {title}
         </h1>
@@ -50,7 +50,7 @@ function Aviso({
 export default function Avisos() {
   //@ts-ignore
   const [avisos, setAvisos] = useState<AvisoProps[]>(
-    JSON.parse(localStorage.getItem(LOCAL_STORAGE.AVISOS_DATA)) || []
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE.AVISOS_DATA) || "[]")
   );
   useEffect(() => {
     fetch(URL + "/aviso/")

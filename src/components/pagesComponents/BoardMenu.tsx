@@ -7,8 +7,8 @@ export default function BoardMenu() {
     <div className=" w-screen fixed bottom-0 bg-dark rounded-t-3xl h-20">
       <div className=" relative">
         <img
-          className=" absolute w-24 left-6"
-          style={{ bottom: "-64px" }}
+          className=" absolute w-16 left-6"
+          style={{ top: "6px" }}
           src={logo}
         />
       </div>
