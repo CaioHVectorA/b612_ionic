@@ -23,6 +23,6 @@ export default function getMateriaImg(materia: string): string {
             return true
         }})
     })
-    if (!materiaFound) return '/logo.png'
+    if (!materiaFound) return '/iconlivro.png'
     return `/mat/${materiaFound.response}.png`
 }
