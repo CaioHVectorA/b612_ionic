@@ -47,14 +47,19 @@ const Initial: React.FC = () => {
   useEffect(() => {
     const hasUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE.USER_DATA));
     if (!hasUser) return;
-    hasUser.user = name
-    localStorage.setItem(LOCAL_STORAGE.USER_DATA, JSON.stringify(hasUser))
-  }, [name])
+    hasUser.user = name;
+    localStorage.setItem(LOCAL_STORAGE.USER_DATA, JSON.stringify(hasUser));
+  }, [name]);
   return (
     <IonPage>
       <IonContent fullscreen>
-        <ColumnContainer className=" px-10 h-screen gap-1 justify-center text-white" style={{background: `url(/bg-login.png)`}}>
-          <label htmlFor="name" className=" text-xl font-bold">Seu Nome</label>
+        <ColumnContainer
+          className=" px-10 h-screen gap-1 justify-center text-white"
+          style={{ background: `url(/bg-login.png)` }}
+        >
+          <label htmlFor="name" className=" text-xl font-bold">
+            Seu Nome
+          </label>
           <input
             value={name}
             onChange={({ target }) => setName(target.value)}
@@ -65,9 +70,14 @@ const Initial: React.FC = () => {
           />
           <IonSelect
             onIonChange={(e) => handleTurma(e.detail.value)}
-            style={{transition: '5s', '--ion-color-step-650': '#fff'}}
-            
-            className={` border px-2 transition-all ${turma !== 0 && 'bg-main rounded-md'}`}
+            style={{
+              transition: "5s",
+              "--ion-color-step-650": "#fff",
+              "--ion-color-step-50": "transparent",
+            }}
+            className={` border px-2 bg-dark transition-all ${
+              turma !== 0 && "bg-main rounded-md"
+            }`}
             // style={turma !== 0 ? {} : {}}
             labelPlacement="fixed"
             fill="solid"
