@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SimpleContainer } from "../utils/types";
+import { LOCAL_STORAGE } from "../utils/envariables";
 
 type AppContextValue = {
     scrollValue: number;
@@ -26,7 +27,7 @@ export const AppContext = React.createContext<AppContextValue>({
 export const ContextContainer = ({children}: SimpleContainer) => {
     const [scrollValue, setScrollValue] = useState<number>(0);
     const [day, setDay] = useState<string>(new Date().toISOString());
-    const [turma, setTurma] = useState<number>(0)
+    const [turma, setTurma] = useState<number>(JSON.parse(localStorage.getItem(LOCAL_STORAGE.USER_DATA) || '{"turma": 0}').turma || 0)
     const [name, setName] = useState<string>('')
     return (<AppContext.Provider value={{ scrollValue, setScrollValue, day, setDay, turma, setTurma, name, setName}}>
         {children}

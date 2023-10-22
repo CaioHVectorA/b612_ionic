@@ -2,7 +2,6 @@ import { useContext, useEffect, useState, useRef } from "react";
 import getRange from "../../utils/func/getRange";
 import { AppContext } from "../AppContext";
 import { ColumnContainer } from "../styled/container";
-import { error } from "veclog";
 import "../styled/horarios.css";
 import {
   ReturnDayByISO,
@@ -99,7 +98,7 @@ export default function Horarios() {
         localStorage.setItem(LOCAL_STORAGE.HORARIOS_DATA, JSON.stringify(data));
         setHorarios(data);
       })
-      .catch((err) => error(err, false));
+      .catch((err) => console.log(err, false));
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day, turma]);
   const Rotina = () => {

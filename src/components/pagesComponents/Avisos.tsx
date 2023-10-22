@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ColumnContainer } from "../styled/container";
 import { LOCAL_STORAGE, URL } from "../../utils/envariables";
-import { error } from "veclog";
+import { AppContext } from "../AppContext";
+import { getFilterAvisos } from "../../utils/getFilterAvisos";
 
 type AvisoProps = {
   author: string;
   img: string;
   title: string;
   body: string;
-  tags: string;
+  category: string;
 };
 
 function Aviso({
@@ -17,7 +18,7 @@ function Aviso({
   title,
   index,
   img,
-  tags,
+  category,
   length,
 }: AvisoProps & { index: number; length: number }) {
   return (
@@ -52,6 +53,9 @@ export default function Avisos() {
   const [avisos, setAvisos] = useState<AvisoProps[]>(
     JSON.parse(localStorage.getItem(LOCAL_STORAGE.AVISOS_DATA) || "[]")
   );
+  const { turma } = useContext(AppContext)
+  const filteredAvisos = avisos.filter((aviso) => getFilterAvisos(aviso,turma))
+  console.log(filteredAvisos, turma)
   useEffect(() => {
     fetch(URL + "/aviso/")
       .then((res) => res.json())
@@ -59,13 +63,13 @@ export default function Avisos() {
         localStorage.setItem(LOCAL_STORAGE.AVISOS_DATA, JSON.stringify(data));
         setAvisos(data);
       })
-      .catch((err) => error(err, true));
+      .catch((err) => console.log(err, true));
   }, []);
   return (
     <div className=" flex flex-row-reverse overflow-x-auto scroll-smooth gap-3 snap-x snap-mandatory h-4/5">
-      {avisos.map((item, index) => (
+      {filteredAvisos.map((item, index) => (
         <Aviso
-          tags={item.tags}
+          category={item.category}
           img={item.img}
           length={avisos.length}
           title={item.title}
