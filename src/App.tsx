@@ -26,6 +26,7 @@ import { ContextContainer } from "./components/AppContext";
 import Board from "./pages/Board";
 import Initial from "./pages/Initial";
 import { LOCAL_STORAGE } from "./utils/envariables";
+import AllHorarios from "./pages/AllHorarios";
 setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
@@ -50,6 +51,9 @@ const App: React.FC = () => (
           </Route>
           <Route path={"/avisos"}>
             <Board />
+          </Route>
+          <Route path={"/horarios"}>
+            <AllHorarios />
           </Route>
         </ContextContainer>
       </IonRouterOutlet>

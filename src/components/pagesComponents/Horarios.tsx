@@ -22,6 +22,85 @@ type _Horario = {
   Horario: string;
   index: number;
 };
+
+const Rotina = ({ horariosData,sampleDay }: { sampleDay: string, horariosData: T_Horario[][] }) => {
+  return (
+    <>
+      <HorariosContainer>
+        {horariosData.length > 0 &&
+        ReturnDayByISO(sampleDay) - 1 !== -1 &&
+        ReturnDayByISO(sampleDay) !== 6 ? (
+          <>
+            {horariosData[ReturnDayByISO(sampleDay) - 1].map(
+              (item: T_Horario | null, index) => (
+                <>
+                  {item ? (
+                    <>
+                      {item.tempo.isBreak ? (
+                        <>
+                          <div
+                            key={index}
+                            className={` w-screen px-6 h-9 break_horario self-center  ${
+                              index === 2 &&
+                              !!!horariosData[
+                                ReturnDayByISO(sampleDay) - 1
+                              ][0]
+                                ? "next-mt"
+                                : ""
+                            }`}
+                          >
+                            <div
+                              key={index}
+                              className={` bg-dark flex px-6 justify-center gap-6 py-3 items-center text-zinc-50 py-2  ${
+                                (index === 2 &&
+                                  !!!horariosData[
+                                    ReturnDayByISO(sampleDay) - 1
+                                  ][0]) ||
+                                index === 0
+                                  ? "bottom-4"
+                                  : "bottom-16"
+                              } relative`}
+                            >
+                              <p className=" text-3xl">
+                                {item.tempo.materia}
+                              </p>
+                              <p className=" text-xl">{item.tempo.horario}</p>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <Horario
+                          index={index}
+                          Horario={item.tempo.horario}
+                          //  @ts-ignore
+                          Sala={item.tempo.sala}
+                          Materia={item.tempo.materia}
+                          //  @ts-ignore
+                          Prof={item.tempo.professor}
+                          key={item.tempo.horario}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )
+            )}
+          </>
+        ) : (
+          <div className=" w-full items-center gap-6 flex flex-col text-center">
+            <h1 className=" text-3xl font-bold">Hoje não há aula!</h1>
+            <h3>Aproveite o seu dia! {":)"}</h3>
+            <img src="/free_il.png" />
+          </div>
+        )}
+        {horariosData.length === 0 && <h1>Carregando...</h1>}
+      </HorariosContainer>
+    </>
+  );
+};
+
 function HorariosContainer({ children }: SimpleContainer) {
   return (
     <ColumnContainer className=" w-screen px-6 bg-light rounded-2xl py-6 -z-20">
@@ -29,7 +108,7 @@ function HorariosContainer({ children }: SimpleContainer) {
     </ColumnContainer>
   );
 }
-function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
+export function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
   const [active, setActive] = useState(false);
   const ref = useRef(null);
   return (
@@ -39,7 +118,7 @@ function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
         ref={ref}
         className=" bg-dark flex justify-around rounded-2xl p-3 items-center text-white"
       >
-        <img src={getMateriaImg(Materia)} className=" w-20 object-cover" />
+        <img src={getMateriaImg(Materia)} className=" w-20 object-cover h-20" />
         <h3 className=" text-3xl">{Materia}</h3>
       </div>
       <div
@@ -98,86 +177,9 @@ export default function Horarios() {
         localStorage.setItem(LOCAL_STORAGE.HORARIOS_DATA, JSON.stringify(data));
         setHorarios(data);
       })
-      .catch((err) => console.log(err, false));
+      .catch((err) => console.log (err, false));
     setNumbers(arrayDateNums(new Date(day).toISOString()));
   }, [day, turma]);
-  const Rotina = () => {
-    return (
-      <>
-        <HorariosContainer>
-          {horariosData.length > 0 &&
-          ReturnDayByISO(sampleDay) - 1 !== -1 &&
-          ReturnDayByISO(sampleDay) !== 6 ? (
-            <>
-              {horariosData[ReturnDayByISO(sampleDay) - 1].map(
-                (item: T_Horario | null, index) => (
-                  <>
-                    {item ? (
-                      <>
-                        {item.tempo.isBreak ? (
-                          <>
-                            <div
-                              key={index}
-                              className={` w-screen px-6 h-9 break_horario self-center  ${
-                                index === 2 &&
-                                !!!horariosData[
-                                  ReturnDayByISO(sampleDay) - 1
-                                ][0]
-                                  ? "next-mt"
-                                  : ""
-                              }`}
-                            >
-                              <div
-                                key={index}
-                                className={` bg-dark flex px-6 justify-center gap-6 py-3 items-center text-zinc-50 py-2  ${
-                                  (index === 2 &&
-                                    !!!horariosData[
-                                      ReturnDayByISO(sampleDay) - 1
-                                    ][0]) ||
-                                  index === 0
-                                    ? "bottom-4"
-                                    : "bottom-16"
-                                } relative`}
-                              >
-                                <p className=" text-3xl">
-                                  {item.tempo.materia}
-                                </p>
-                                <p className=" text-xl">{item.tempo.horario}</p>
-                              </div>
-                            </div>
-                          </>
-                        ) : (
-                          <Horario
-                            index={index}
-                            Horario={item.tempo.horario}
-                            //  @ts-ignore
-                            Sala={item.tempo.sala}
-                            Materia={item.tempo.materia}
-                            //  @ts-ignore
-                            Prof={item.tempo.professor}
-                            key={item.tempo.horario}
-                          />
-                        )}
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </>
-                )
-              )}
-            </>
-          ) : (
-            <div className=" w-full items-center gap-6 flex flex-col text-center">
-              <h1 className=" text-3xl font-bold">Hoje não há aula!</h1>
-              <h3>Aproveite o seu dia! {":)"}</h3>
-              <img src="/free_il.png" />
-            </div>
-          )}
-          {horariosData.length === 0 && <h1>Carregando...</h1>}
-        </HorariosContainer>
-      </>
-    );
-  };
   if (getRange(scrollValue) > 0.15) return;
   return (
     <ColumnContainer
@@ -204,7 +206,7 @@ export default function Horarios() {
         {months[ReturnMonthByISO(sampleDay)]}
       </h3>
       <div className=" w-11/12 rounded-full mx-auto px-6 bg-black h-0.5 opacity-30 mt-4" />
-      <Rotina />
+      <Rotina horariosData={horariosData} sampleDay={sampleDay} />
     </ColumnContainer>
   );
 }

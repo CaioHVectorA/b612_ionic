@@ -57,7 +57,7 @@ export function SecondSession() {
           />
         </div>
       ) : (
-        <div className=" bg-light shadow-2xl pt-3 rounded-b-3xl fixed top-0 z-50">
+        <div className=" bg-darkest shadow-2xl pt-3 rounded-b-3xl fixed top-0 z-50">
           <div className=" flex w-screen px-3 justify-between rounded-b-3xl items-center">
             <img
               onClick={() => setScrollValue(0)}
