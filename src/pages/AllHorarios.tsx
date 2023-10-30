@@ -2,9 +2,11 @@ import { useContext, useEffect, useState } from "react"
 import { URL } from "../utils/envariables"
 import axios, {AxiosPromise} from "axios"
 import { AppContext } from "../components/AppContext";
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonIcon, IonPage } from "@ionic/react";
 import { ReturnDayByISO } from "../utils/func/dayFuncs";
 import { Horario } from "../components/pagesComponents/Horarios";
+import { Title } from "../components/styled/titles";
+import { arrowBack, arrowForward } from "ionicons/icons";
 const Rotina = ({ horariosData,sampleDay }: { sampleDay: string, horariosData: T_Horario[][] }) => {
     return (
       <div className="flex flex-col py-6 mx-0">
@@ -95,6 +97,8 @@ export default function AllHorarios() {
     const [allHorarios, setAllHorarios] = useState<T_Horario[][][] | null>(null)
     const [indexes, setIndexes] = useState<{start: number, end: number}>({end: 4, start: 0})
     const { day } = useContext(AppContext)
+    const [actualDay, setDay] = useState(day)
+    console.log()
     useEffect(() => {
         let arrPromises: AxiosPromise[] = []
         for (let x = 1; x <= 3; x++) {
@@ -136,13 +140,28 @@ export default function AllHorarios() {
                     </ul>
                     <hr />
                 </div>
-            <div className="flex flex-wrap gap-3 justify-center w-screen">
+                <div className=" w-2/12 mx-auto flex items-center justify-center gap-6">
+                  <IonIcon onClick={() => {
+                    const actualDate = new Date(actualDay)
+                    const newDate = new Date(actualDay)
+                    newDate.setDate(actualDate.getDate() - 1)
+                    setDay(newDate.toISOString())
+                  }} className=" text-2xl cursor-pointer transition-all hover:invert hover:bg-white rounded-full p-1" md={arrowBack}></IonIcon>
+                  <Title className=" text-center font-bold">{["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"][new Date(actualDay).getDay()]}</Title>
+                  <IonIcon onClick={() => {
+                    const actualDate = new Date(actualDay)
+                    const newDate = new Date(actualDay)
+                    newDate.setDate(actualDate.getDate() + 1)
+                    setDay(newDate.toISOString())
+                  }} className=" text-2xl cursor-pointer transition-all hover:invert hover:bg-white rounded-full p-1" md={arrowForward}></IonIcon>
+                </div>
+            <div className="flex flex-wrap gap-3 justify-center w-screen max-md:mt-24">
                 {allHorarios && (
                     <>
                         {allHorarios.slice(indexes.start,indexes.end).map(horario => (
                             <div className=" w-72 mt-2">
                                 <h1 className=" text-center text-3xl">{horario[0][0].turma}</h1>
-                                <Rotina horariosData={horario} sampleDay={day} />
+                                <Rotina horariosData={horario} sampleDay={actualDay} />
                             </div>
                             ))}
                     </>

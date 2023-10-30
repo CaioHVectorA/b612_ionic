@@ -1,5 +1,5 @@
 import { IonIcon } from "@ionic/react";
-import { notifications } from "ionicons/icons";
+import { notifications, exitOutline } from "ionicons/icons";
 import { Title } from "../styled/titles";
 import logo from "../../../public/logo.png";
 import logo2 from "../../../public/logo2.png";
@@ -26,9 +26,13 @@ export function FirstSession() {
         range < 0.15 ? "hidden" : "flex"
       }`}
     >
+     <div className=" flex gap-2 items-center">
       <Title>
         Olá <b>{name}</b>
       </Title>
+      <IonIcon onClick={() => window.location.pathname = '/deslogar'} md={exitOutline} ios={exitOutline} className=" w-8 h-8"/>
+     </div>
+
       <Link to={"/avisos"}>
         <IonIcon
           ios={notifications}

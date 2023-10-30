@@ -65,7 +65,7 @@ const Initial: React.FC = () => {
           />
           <IonSelect
             onIonChange={(e) => handleTurma(e.detail.value)}
-            style={{transition: '5s', '--ion-color-step-650': '#fff'}}
+            style={{transition: '5s', '--ion-color-step-650': '#fff', '--background': 'transparent'}}
             
             className={` border px-2 transition-all ${turma !== 0 && 'bg-main rounded-md'}`}
             // style={turma !== 0 ? {} : {}}
