@@ -116,7 +116,7 @@ export function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
       <div
         onClick={() => setActive(!active)}
         ref={ref}
-        className=" bg-dark flex justify-around rounded-2xl p-3 items-center text-white"
+        className=" bg-dark flex justify-around rounded-2xl p-3 items-center text-main-text"
       >
         <img src={getMateriaImg(Materia)} className=" w-20 object-cover h-20" />
         <h3 className=" text-3xl">{Materia}</h3>
@@ -126,7 +126,7 @@ export function Horario({ Horario, Materia, Prof, Sala, index }: _Horario) {
           !active && "horario"
         } flex transition-all justify-between rounded-2xl relative ${
           active ? "bottom-6" : "bottom-24 shadow-2xl"
-        } -z-10 text-white p-6 pt-10`}
+        } -z-10 text-main-text p-6 pt-10`}
         // style={{ marginBottom: !active && !isIndex ? "-70px" : "0px" }}
       >
         <ColumnContainer className=" w-full items-center">
@@ -192,7 +192,7 @@ export default function Horarios() {
         {numbers.map((item: number, index) => (
           <h3
             onClick={() => HandleSetNumber(index - 2)}
-            className={` w-8 text-white kufam ${
+            className={` w-8 text-main-text kufam ${
               index === 2 ? " text-3xl text-main" : "text-xl"
             }`}
             key={item}
@@ -201,7 +201,7 @@ export default function Horarios() {
           </h3>
         ))}
       </div>
-      <h3 className=" text-white">
+      <h3 className=" text-main-text">
         {weekDays[ReturnDayByISO(sampleDay)]},{" "}
         {months[ReturnMonthByISO(sampleDay)]}
       </h3>

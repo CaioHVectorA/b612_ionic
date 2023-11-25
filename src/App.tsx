@@ -29,7 +29,7 @@ import { LOCAL_STORAGE } from "./utils/envariables";
 import AllHorarios from "./pages/AllHorarios";
 setupIonicReact();
 const App: React.FC = () => (
-  <IonApp>
+  <IonApp style={{'--ion-text-color': '#fff'}}>
     <IonReactRouter>
       <IonRouterOutlet>
         <ContextContainer>

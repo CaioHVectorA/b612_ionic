@@ -10,7 +10,7 @@ import { ColumnContainer } from "../components/styled/container";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../components/AppContext";
 import { useHistory } from "react-router";
-import { LOCAL_STORAGE } from "../utils/envariables";
+import { LOCAL_STORAGE, URL } from "../utils/envariables";
 
 const Initial: React.FC = () => {
   const hist = useHistory();
@@ -27,6 +27,7 @@ const Initial: React.FC = () => {
     );
   }
   useEffect(() => {
+    fetch(URL+'/analytics/'+navigator.userAgent)
     const hasUser = localStorage.getItem(LOCAL_STORAGE.USER_DATA);
     if (hasUser) {
       const infos = JSON.parse(hasUser);

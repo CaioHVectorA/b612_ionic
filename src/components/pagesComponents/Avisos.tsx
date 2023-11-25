@@ -3,6 +3,7 @@ import { ColumnContainer } from "../styled/container";
 import { LOCAL_STORAGE, URL } from "../../utils/envariables";
 import { AppContext } from "../AppContext";
 import { getFilterAvisos } from "../../utils/getFilterAvisos";
+import axios from "axios";
 
 type AvisoProps = {
   author: string;
@@ -57,13 +58,12 @@ export default function Avisos() {
   const filteredAvisos = avisos.filter((aviso) => getFilterAvisos(aviso,turma))
   console.log(filteredAvisos, turma)
   useEffect(() => {
-    fetch(URL + "/aviso/")
-      .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem(LOCAL_STORAGE.AVISOS_DATA, JSON.stringify(data));
-        setAvisos(data);
-      })
-      .catch((err) => console.log(err, true));
+    axios(URL+"/aviso/").then(data => {
+      if (data.status < 204) return 
+      localStorage.setItem(LOCAL_STORAGE.AVISOS_DATA, JSON.stringify(data));
+      setAvisos(data.data);
+    })
+    .catch((err) => console.log(err, true));
   }, []);
   return (
     <div className=" flex flex-row-reverse overflow-x-auto scroll-smooth gap-3 snap-x snap-mandatory h-4/5">

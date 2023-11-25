@@ -2,6 +2,7 @@
 
 .react-calendar {
     border: none;
+    color: black !important;
 }
 
 .react-calendar__navigation__label__labelText--from {
